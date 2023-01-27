@@ -13,6 +13,10 @@ npm install
 ```bash
 quasar dev
 ```
+### If dont work, try
+```bash
+npx quasar dev
+```
 
 
 ### Lint the files
@@ -22,6 +26,12 @@ yarn lint
 npm run lint
 ```
 
+### If dont do Lint, try
+```bash
+yarn lint -- --fix
+# or
+npm run lint -- --fix
+```
 
 
 ### Build the app for production
