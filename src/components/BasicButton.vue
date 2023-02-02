@@ -16,6 +16,10 @@ const props = defineProps({
   showLoading: {
     type: Boolean,
     default: false
+  },
+  id: {
+    type: String,
+    default: 'basic-btn'
   }
 })
 
@@ -54,7 +58,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <q-btn :loading="btnLoading" :color="getColor" @click="onClick()">
+  <q-btn :id="id" :loading="btnLoading" :color="getColor" @click="onClick()">
     {{ props.label }}
     <template v-slot:loading>
       <q-spinner-hourglass></q-spinner-hourglass>
