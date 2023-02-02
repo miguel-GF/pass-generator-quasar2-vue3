@@ -2,3 +2,8 @@
 body {
   color: $dark-page
 }
+
+.link-style {
+  text-decoration: underline $primary;
+  cursor: pointer;
+}
