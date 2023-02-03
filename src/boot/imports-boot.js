@@ -1,7 +1,7 @@
 import { boot } from 'quasar/wrappers'
-import { componentsStore } from '../stores/components-store'
+import { pluginsStore } from '../stores/plugins-store'
 
-const cStore = componentsStore()
+const cStore = pluginsStore()
 const { $loader, $notify } = cStore
 
 export default boot(({ app }) => {
