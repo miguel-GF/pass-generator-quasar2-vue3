@@ -28,7 +28,7 @@ const $notify = (message, color) => {
   })
 }
 
-export const componentsStore = defineStore('cs', () => {
+export const pluginsStore = defineStore('cs', () => {
   return {
     $loader,
     $notify

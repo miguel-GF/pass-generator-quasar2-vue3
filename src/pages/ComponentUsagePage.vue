@@ -35,7 +35,7 @@
 
 <script setup>
 import { defineAsyncComponent, ref } from '../imports/import-vue.js'
-import { componentsStore } from '../stores/components-store'
+import { pluginsStore } from '../stores/plugins-store'
 
 // Imports de componentes de forma asyncrona
 const BasicButton = defineAsyncComponent({
@@ -49,7 +49,7 @@ const TheLink = defineAsyncComponent({
   loader: () => import('../components/TheLink.vue')
 })
 
-const { $loader, $notify } = componentsStore()
+const { $loader, $notify } = pluginsStore()
 
 // Variables / data inicial
 const inputValue = ref('')
