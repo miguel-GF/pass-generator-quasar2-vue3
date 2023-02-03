@@ -1,21 +1,3 @@
-<script setup>
-import { defineAsyncComponent, ref } from '../imports/import-vue.js'
-// Imports de componentes de forma asincrona
-const BasicButton = defineAsyncComponent({
-  loader: () => import('../components/BasicButton.vue')
-})
-
-// Variables / data inicial
-const inputValue = ref('')
-const loading = ref(false)
-const showLoading = ref(false)
-
-// Métodos
-const irPantalla = () => {
-  alert('ir pantalla')
-}
-</script>
-
 <template>
   <q-page class="row justify-center items-center text-center">
     <div class="col-12">
@@ -31,8 +13,31 @@ const irPantalla = () => {
         <div v-text="inputValue"></div>
       </div>
       <div class="col-12 col-sm-6">
-        <BasicButton label="Generar password" @on-click="irPantalla" :loading="loading" :showLoading="showLoading" />
+        <BasicButton label="Generar password" @on-click="irPantallaPassword" :loading="loading" :showLoading="showLoading" />
       </div>
     </div>
   </q-page>
 </template>
+
+<script setup>
+import { defineAsyncComponent, ref, useRouter } from '../imports/import-vue.js'
+const router = useRouter()
+
+// Imports de componentes de forma asyncrona
+const BasicButton = defineAsyncComponent({
+  loader: () => import('../components/BasicButton.vue')
+})
+
+// Variables / data inicial
+const inputValue = ref('')
+const loading = ref(false)
+const showLoading = ref(false)
+
+// Métodos
+const irPantalla = () => {
+  router.push({ name: 'componentUsagePage' })
+}
+const irPantallaPassword = () => {
+  router.push({ name: 'passwordPage' })
+}
+</script>
