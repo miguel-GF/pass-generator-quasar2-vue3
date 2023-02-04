@@ -5,7 +5,7 @@
       <div class="col-6">
         <q-list bordered>
           <template v-for="d in datos" :key="d.id">
-            <q-item tag="label" v-ripple @click="cambiarPassword(d.id)">
+            <q-item :class="d.checked ? 'bg-teal-1' : ''" tag="label" v-ripple @click="cambiarPassword(d.id)">
               <q-item-section side >
                 {{  d.checked ? 'Si' : 'No' }}
               </q-item-section>
@@ -56,16 +56,28 @@
       <div class="col-12">
         {{ password }}
       </div>
+      <div class="col-12">
+        <BasicButton
+          label="Copiar password"
+          :loading="loading"
+          :showLoading="showLoading"
+          @on-click="copiarPassword()"
+          tabindex="2"
+        />
+      </div>
     </div>
   </q-page>
 </template>
 
 <script setup>
-import { ref, onMounted, sample } from '../imports/import-vue.js'
-// Imports de componentes de forma asincrona
-// const BasicButton = defineAsyncComponent({
-//   loader: () => import('../components/BasicButton.vue')
-// })
+import { ref, onMounted, sample, defineAsyncComponent, copyToClipboardQ } from '../imports/import-vue.js'
+import { pluginsStore } from '../stores/plugins-store'
+const { $notify } = pluginsStore()
+// Imports de componentes de forma asyncrona
+const BasicButton = defineAsyncComponent({
+  loader: () => import('../components/BasicButton.vue')
+})
+// Variables / data inicial
 const numeros = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
 const caracteresEspeciales = ['@', '$', '%', '&', '(', ')', '|', '?', '#', '-', '_']
 const alpha = Array.from(Array(26)).map((e, i) => i + 65)
@@ -74,7 +86,6 @@ const alphabet = alpha.flatMap((x) => [
   String.fromCharCode(x).toLowerCase()
 ])
 
-// Variables / data inicial
 const password = ref('')
 const cantidadLetras = ref(8)
 const datos = ref([
@@ -97,6 +108,8 @@ const datos = ref([
     caracteres: [...alphabet]
   }
 ])
+const loading = ref(false)
+const showLoading = ref(false)
 const generarPassword = (cantidad = 8, usarNumeros = true, usarCaracteres = true, usarLetras = true) => {
   let conjunto = [], pass = ''
   if (!usarNumeros && !usarCaracteres && !usarLetras) {
@@ -114,6 +127,15 @@ const generarPassword = (cantidad = 8, usarNumeros = true, usarCaracteres = true
 const cambiarPassword = async (id = '') => {
   if (id !== '') datos.value[id].checked = !datos.value[id].checked
   generarPassword(cantidadLetras.value, datos.value[0].checked, datos.value[1].checked, datos.value[2].checked)
+}
+const copiarPassword = () => {
+  copyToClipboardQ(password.value)
+    .then(() => {
+      $notify('Copiado al portapapeles!')
+    })
+    .catch(() => {
+      $notify('Fallo al copiar en portapapeles!', 'negative')
+    })
 }
 onMounted(() => {
   generarPassword()
